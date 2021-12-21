@@ -58,7 +58,9 @@ captures/
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
-
+app/.cxx
+app/build
+app/src/main/cpp
 # Google Services (e.g. APIs or Firebase)
 # google-services.json
 

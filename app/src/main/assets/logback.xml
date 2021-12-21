@@ -1,0 +1,44 @@
+<configuration>
+    <property name="LOG_DIR" value="/data/data/com.wangjing.cashier/files" />
+
+    <!-- Create a logcat appender -->
+    <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Create a file appender for DEBUG-level messages -->
+    <appender name="ALLLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/logs/debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <!--使用redis启用下面配置-->
+<!--    <appender name="plumelog" class="com.sk.skextension.utils.log.plumelog.RedisAppender">-->
+<!--        <appName>cashier-android</appName>-->
+<!--        <model>sentinel</model>-->
+<!--        <masterName>mymaster</masterName>-->
+<!--        <redisHost>47.100.219.94:26279,47.100.219.94:26280,47.100.219.94:26281</redisHost>-->
+<!--        <redisAuth>Wj20210623</redisAuth>-->
+<!--    </appender>-->
+
+    <!-- Write INFO (and higher-level) messages to logcat -->
+    <root level="DEBUG">
+        <appender-ref ref="logcat" />
+<!--        <appender-ref ref="plumelog" />-->
+        <appender-ref ref="ALLLOG" />
+    </root>
+</configuration>

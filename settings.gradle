@@ -7,4 +7,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CloudStorage_Android"
-include ':app',':SKExtension'
+include ':app', ':skextension'
