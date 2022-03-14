@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -40,6 +42,7 @@ android {
     }
     buildFeatures {
         compose true
+        dataBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
@@ -53,7 +56,7 @@ android {
     externalNativeBuild {
         cmake {
             path file('src/main/cpp/CMakeLists.txt')
-            version '3.10.2'
+            version '3.18.1'
         }
     }
 }
@@ -63,6 +66,7 @@ dependencies {
     implementation('androidx.multidex:multidex:2.0.1')
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -78,5 +82,16 @@ dependencies {
     //---------------------第三方库引用----------------
     //kotlin 扩展相关
     implementation project(':skextension')
+    //自动适配
+    implementation('com.github.JessYanCoding:AndroidAutoSize:v1.2.1')
+    //popwindow
+    implementation('io.github.razerdp:BasePopup:3.2.0')
+    //dialog
+    implementation('com.github.kongzue.DialogX:DialogX:0.0.44.beta17')
+    //下拉刷新
+    implementation('io.github.scwang90:refresh-layout-kernel:2.0.5')
+    implementation('io.github.scwang90:refresh-header-classics:2.0.5')
+    //BRV
+    implementation('com.github.liangjingkanji:BRV:1.3.54')
 
 }
