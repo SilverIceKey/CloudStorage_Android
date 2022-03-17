@@ -8,6 +8,7 @@ import com.sk.skextension.utils.net.retrofit.RetrofitClient
 import com.tencent.mmkv.MMKV
 import com.sk.cloudstorage.MyApplication
 import com.sk.cloudstorage.base.BaseActivity
+import com.sk.cloudstorage.features.login.LoginActivity
 import com.sk.cloudstorage.features.main.MainActivity
 import com.sk.cloudstorage.server.ServerConfig
 
@@ -24,7 +25,11 @@ class SplashActivity : BaseActivity<SplashView>() {
         MMKV.initialize(this)
         //初始化工具类
         Utils.init(MyApplication.globalContext)
-        ActivityUtils.startActivity(Intent(this, MainActivity::class.java))
+        //设置网络
+        RetrofitClient.instance.setApplicationContext(this)
+        RetrofitClient.instance.defaultConfig(ServerConfig())
+
+        ActivityUtils.startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 

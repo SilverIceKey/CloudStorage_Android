@@ -1,8 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -13,15 +12,15 @@ android {
         minSdk 24
         targetSdk 31
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+
+        // 配置此参数，方可生成混淆文件
+        consumerProguardFiles "consumer-rules.pro"
         externalNativeBuild {
             cmake {
                 cppFlags ''
+//                abiFilters 'arm64-v8a'
             }
         }
     }
@@ -32,26 +31,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        compose true
+    }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
+        pickFirst 'lib/*/libc++_shared.so'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
-    }
-    buildFeatures {
-        compose true
-        dataBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        kotlinCompilerExtensionVersion '1.0.5'
     }
     externalNativeBuild {
         cmake {
@@ -68,16 +64,16 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.ui:ui:1.0.5"
+    implementation "androidx.compose.material:material:1.0.5"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.0.5"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.0.5"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.0.5"
 
     //---------------------第三方库引用----------------
     //kotlin 扩展相关
@@ -93,5 +89,7 @@ dependencies {
     implementation('io.github.scwang90:refresh-header-classics:2.0.5')
     //BRV
     implementation('com.github.liangjingkanji:BRV:1.3.54')
+    //StatusBar状态栏透明
+    implementation('com.github.liangjingkanji:StatusBar:2.0.2')
 
 }

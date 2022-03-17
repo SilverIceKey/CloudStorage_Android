@@ -6,8 +6,6 @@ import com.sk.skextension.utils.net.mqtt.EMQXHelper
 import com.sk.skextension.utils.receivers.ScreenStatusReceiver
 import com.sk.cloudstorage.base.BaseActivity
 import com.sk.cloudstorage.constants.Constant
-import com.sk.cloudstorage.server.MQTTConfig
-import com.sk.cloudstorage.utils.encrypt.EncryptHelper
 
 /**
  * 主界面activity
@@ -19,7 +17,6 @@ class MainActivity : BaseActivity<MainView>() {
     override fun initAndLoader() {
         checkStoragePermission()
         ScreenStatusReceiver.registerReceiver(this)
-        EMQXHelper.instance.init(MQTTConfig())
     }
 
     /**

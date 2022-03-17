@@ -3,6 +3,7 @@ package com.sk.cloudstorage.base
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.drake.statusbar.immersive
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -18,6 +19,7 @@ abstract class BaseActivity<T : BaseView> : AppCompatActivity(), ViewInterface {
         view = newInstanceView()
         view.viewInterface = this
         setContent { view.Content() }
+        immersive()
         initAndLoader()
     }
 

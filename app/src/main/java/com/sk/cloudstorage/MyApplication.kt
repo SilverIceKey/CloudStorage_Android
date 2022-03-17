@@ -27,8 +27,5 @@ class MyApplication : MultiDexApplication() {
                     return true
                 }
             })
-        //设置网络
-        RetrofitClient.instance.setApplicationContext(this)
-        RetrofitClient.instance.defaultConfig(ServerConfig())
     }
 }
