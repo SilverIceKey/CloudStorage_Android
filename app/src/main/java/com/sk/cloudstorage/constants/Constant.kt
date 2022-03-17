@@ -24,7 +24,7 @@ object Constant {
     /**
      *MQTT服务器地址
      */
-    external fun MQTTSERVER_URL(): String
+//    external fun MQTTSERVER_URL(): String
 
     /**
      * 获取加密密钥
