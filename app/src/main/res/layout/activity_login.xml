@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="loginPresenter"
+            type="com.sk.cloudstorage.features.login.LoginPresenter" />
+
+        <variable
+            name="loginBean"
+            type="com.sk.cloudstorage.features.login.bean.LoginBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/app_logo" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_username_et_hint"
+            android:singleLine="true"
+            android:text="@{loginBean.username}" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password_et_hint"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:text="@{loginBean.password}" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:onClick="@{(view)->loginPresenter.login(loginBean.username,loginBean.password)}"
+            android:text="@string/login_btn_txt" />
+    </LinearLayout>
+</layout>

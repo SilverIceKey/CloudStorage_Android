@@ -1,4 +1,4 @@
-package com.sk.smartdevicemanager.utils.event
+package com.sk.cloudstorage.utils.event
 
 open class EventBean<T>(
     var msg: String = "",

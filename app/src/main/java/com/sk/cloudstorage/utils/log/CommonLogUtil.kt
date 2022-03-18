@@ -1,4 +1,4 @@
-package com.sk.smartdevicemanager.utils.log
+package com.sk.cloudstorage.utils.log
 
 import com.sk.skextension.kotlin.emptyOutputStream
 import org.slf4j.Logger

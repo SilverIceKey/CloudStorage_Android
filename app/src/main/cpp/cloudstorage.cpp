@@ -20,10 +20,10 @@
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_sk_cloudstorage_constants_Constant_SERVER_1URL(JNIEnv *env, jobject thiz) {
-    return env->NewStringUTF("输入服务器地址");
+    return env->NewStringUTF("http://home.silvericekey.fun:32099/");
 }
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_sk_cloudstorage_constants_Constant_EncryptKey(JNIEnv *env, jobject thiz) {
-    return env->NewStringUTF("输入密钥");
+    return env->NewStringUTF("539ee36d893d53ca87ca842b78917696");
 }

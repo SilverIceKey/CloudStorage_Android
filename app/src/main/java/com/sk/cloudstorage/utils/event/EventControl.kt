@@ -1,6 +1,6 @@
-package com.sk.smartdevicemanager.utils.event
+package com.sk.cloudstorage.utils.event
 
-import com.sk.smartdevicemanager.utils.log.CommonLogUtil
+import com.sk.cloudstorage.utils.log.CommonLogUtil
 import org.greenrobot.eventbus.EventBus
 
 /**

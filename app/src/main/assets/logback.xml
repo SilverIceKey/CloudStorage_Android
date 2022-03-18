@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_DIR" value="/data/data/com.wangjing.cashier/files" />
+    <property name="LOG_DIR" value="/data/data/com.sk.cloudstorage/files" />
 
     <!-- Create a logcat appender -->
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">

@@ -1,11 +1,11 @@
-package com.sk.smartdevicemanager.utils.http
+package com.sk.cloudstorage.utils.http
 
 import com.kongzue.dialogx.dialogs.TipDialog
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.sk.cloudstorage.base.BaseResponse
 import com.sk.cloudstorage.constants.ErrorCode
 import com.sk.cloudstorage.features.common.model.CommonModel
-import com.sk.smartdevicemanager.utils.event.CommonErrorEvent
+import com.sk.cloudstorage.utils.event.CommonErrorEvent
 import org.greenrobot.eventbus.EventBus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,8 +30,8 @@ abstract class ResponseCallback<T : BaseResponse<*>> : Callback<T> {
     override fun onResponse(call: Call<T>, response: Response<T>) {
         log.info("网络请求成功")
         val responseData = response.body()
-        if (responseData?.errcode != 0) {
-            onResponseError(responseData?.errcode, responseData?.errmsg)
+        if (responseData?.code != ErrorCode.OK) {
+            onResponseError(responseData?.code, responseData?.msg)
         } else {
             onResponseSuccess(call, responseData)
         }
