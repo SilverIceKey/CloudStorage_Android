@@ -8,13 +8,14 @@ import android.content.ServiceConnection
 import android.os.*
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import android.widget.EditText
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.KeyboardUtils
+import com.drake.statusbar.immersive
+import com.kongzue.dialogx.dialogs.TipDialog
+import com.kongzue.dialogx.dialogs.WaitDialog
+import com.sk.cloudstorage.utils.event.CommonErrorEvent
 import com.sk.cloudstorage.utils.event.EventBean
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -23,23 +24,26 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.stream.IntStream
 
-
 /**
  * 基类公用处理模块
  */
-abstract class BaseActivity<T : ViewDataBinding?> : AppCompatActivity() {
+abstract class BaseActivity<P : BasePresenter, T : BaseView<P>> : AppCompatActivity() {
     lateinit var log: Logger
+    lateinit var view: T
     var messenger: Messenger? = null
     var serviceConn: ServiceConnection? = null
     var serviceMessenger: Messenger? = null
     var isServiceBind: Boolean = false
-    protected var viewDataBinding: T? = null
+    val presenter: P by lazy {
+        createPresenter()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLog()
-        //转为databinding
-//        setContentView(getLayoutId())
-        viewDataBinding = DataBindingUtil.setContentView<T>(this, getLayoutId())
+        view = newInstanceView(presenter)
+        setContent { view.Content() }
+        immersive(darkMode = true)
         setupUI(window.decorView)
     }
 
@@ -92,18 +96,19 @@ abstract class BaseActivity<T : ViewDataBinding?> : AppCompatActivity() {
     }
 
     /**
+     * 检测id是否排除
+     */
+    private fun checkIdInExcludeUI(id: Int): Boolean {
+        return IntStream.of(*hideKeyboardIdExclude()).anyMatch { t -> t == id }
+    }
+
+    /**
      * 不隐藏键盘的ui按照id排除
      */
     open fun hideKeyboardIdExclude(): IntArray {
         return intArrayOf()
     }
 
-    /**
-     * 检测id是否排除
-     */
-    private fun checkIdInExcludeUI(id: Int): Boolean {
-        return IntStream.of(*hideKeyboardIdExclude()).anyMatch { t -> t == id }
-    }
 
     /**
      * service消息处理，如果创建service时重写
@@ -203,16 +208,28 @@ abstract class BaseActivity<T : ViewDataBinding?> : AppCompatActivity() {
      * Eventbus通知处理
      */
     open fun handleEvent(data: EventBean<*>) {
-
+        if (data.type == "dismissCommonErrorDialog") {
+            TipDialog.dismiss()
+            return
+        }
+        if (data is CommonErrorEvent) {
+            TipDialog.show(data.msg, WaitDialog.TYPE.ERROR)
+        }
     }
 
     /**
-     * 获取界面资源文件
+     * 让继承的子类都实现初始化实例界面的方法
      */
-    abstract fun getLayoutId(): Int
+    abstract fun newInstanceView(presenter: P): T
+
+    /**
+     * 创建业务层
+     */
+    abstract fun createPresenter(): P
 
     /**
      * 开始初始化类和加载相关参数
      */
     abstract fun initAndLoader()
+
 }

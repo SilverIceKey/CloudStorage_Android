@@ -1,5 +1,6 @@
 package com.sk.cloudstorage.features.common.model
 
+import com.sk.cloudstorage.constants.GlobalParams
 import com.sk.cloudstorage.constants.MMKVConstants
 import com.sk.cloudstorage.features.common.vo.UpdateTokenVo
 import com.sk.cloudstorage.server.Api
@@ -15,13 +16,15 @@ object CommonModel {
     /**
      * 更新Token
      */
-    fun updateToken(){
+    fun updateToken() {
         RetrofitClient.instance
             .createService(Api::class.java)
             .updateToken()
-            .enqueue(object : ResponseCallback<UpdateTokenVo>(){
+            .enqueue(object : ResponseCallback<UpdateTokenVo>() {
                 override fun onResponseSuccess(call: Call<UpdateTokenVo>, response: UpdateTokenVo) {
-                    MMKV.defaultMMKV().putLong(MMKVConstants.TOKEN_GET_TIME,System.currentTimeMillis())
+                    GlobalParams.token = response.data?.token!!
+                    MMKV.defaultMMKV()
+                        .putLong(MMKVConstants.TOKEN_GET_TIME, System.currentTimeMillis())
                 }
             })
     }
